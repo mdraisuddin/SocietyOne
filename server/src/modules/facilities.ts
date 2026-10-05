@@ -126,7 +126,8 @@ facilitiesRouter.patch('/:id', requirePermission('facilities:manage'), upload.si
     if (entries.length) {
       await c.query(`UPDATE facilities SET ${entries.map(([k], i) => `${k} = $${i + 1}`).join(', ')} WHERE id = $${entries.length + 1}`, [...entries.map(([, v]) => v), id]);
     }
-    if (b.openTime || b.closeTime || b.slotDurationMinutes) await generateSlots(c, a.societyId, id, merged.openTime, merged.closeTime, merged.slot);
+    const scheduleChanged = merged.openTime !== before.open_time.slice(0, 5) || merged.closeTime !== before.close_time.slice(0, 5) || merged.slot !== before.slot_duration_minutes;
+    if (scheduleChanged) await generateSlots(c, a.societyId, id, merged.openTime, merged.closeTime, merged.slot);
     await audit(req, { action: 'facility.updated', entityType: 'facility', entityId: id, oldValues: { name: before.name, is_active: before.is_active }, newValues: Object.fromEntries(entries) }, c);
     return (await c.query(`SELECT * FROM facilities WHERE id = $1`, [id])).rows[0];
   });

@@ -445,6 +445,10 @@ export async function seed({ quiet = false } = {}) {
       other: [{ title: 'Intercom not working', desc: 'The intercom handset in the flat does not ring when the gate calls.', sub: 'General' }],
     };
     const technicians = ['Ramu (Plumber)', 'Srinu (Electrician)', 'Otis Service Team', 'HMWSSB liaison', 'PestFree Services', 'Housekeeping Supervisor – Anil'];
+    const TECH_BY_CATEGORY: Record<string, string> = {
+      plumbing: 'Ramu (Plumber)', water: 'Ramu (Plumber)', electrical: 'Srinu (Electrician)', lift: 'Otis Service Team', pest_control: 'PestFree Services',
+      housekeeping: 'Housekeeping Supervisor – Anil', common_area: 'Housekeeping Supervisor – Anil', security: 'Security Supervisor – Venkat Rao', parking: 'Security Supervisor – Venkat Rao',
+    };
     const statusPool = ['open', 'open', 'assigned', 'in_progress', 'resolved', 'closed', 'closed', 'closed', 'closed'];
     let seq = 1000;
     const complaintIds: { id: string; status: string; raised_by: string }[] = [];
@@ -453,7 +457,7 @@ export async function seed({ quiet = false } = {}) {
       const created = o.createdAt;
       const h = (n: number) => new Date(created.getTime() + n * 3600_000);
       const assigned = ['assigned', 'in_progress', 'resolved', 'closed'].includes(o.status);
-      const tech = assigned ? (o.assignee ?? pick(technicians)) : null;
+      const tech = assigned ? (o.assignee ?? TECH_BY_CATEGORY[o.category] ?? pick(technicians)) : null;
       const r = await c.query(
         `INSERT INTO complaints (society_id, number, flat_id, raised_by, category, subcategory, title, description, location, priority, status, assignee_name, assigned_to,
                                  assigned_at, in_progress_at, resolved_at, closed_at, rating, rated_at, first_response_at, resolution_due_at, created_at, updated_at, created_by)

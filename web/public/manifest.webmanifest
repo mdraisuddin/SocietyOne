@@ -1,0 +1,10 @@
+{
+  "name": "SocietyOne",
+  "short_name": "SocietyOne",
+  "description": "One App. One Community. Everything Connected.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#2b47c9",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
