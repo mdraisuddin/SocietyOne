@@ -15,7 +15,23 @@ After sign-in, each user is sent automatically to the interface for their role.
 
 ---
 
-## Quick start
+## Run it in your browser (nothing to install)
+
+You need only a GitHub account. **GitHub Codespaces** runs SocietyOne and its database on GitHub's servers:
+
+1. Open the repository on GitHub and switch to the branch that contains this code.
+2. Click **Code → Codespaces → Create codespace on …**.
+3. Wait 3–5 minutes the first time. The codespace installs everything, creates the database, loads the Green Meadows demo data, then builds and starts the app.
+4. A browser tab opens on the app. If it doesn't, open the **Ports** tab and click the globe icon next to **4000 (SocietyOne)**.
+5. Sign in with any [demo account](#demo-accounts).
+
+Notes:
+* The app link is private to your GitHub account. To show it to someone, right-click port 4000 → **Port Visibility → Public**. Anyone with the link can then open it.
+* Codespaces stop after about 30 minutes idle. Reopen it from **github.com/codespaces**; your data is kept. To restart the app, run `npm start` in the terminal. To reset the demo data, run `npm run db:reset`.
+* GitHub's free plan includes a monthly allowance of Codespaces hours. Delete the codespace when you're done to avoid using it up.
+* To try it as a phone app, open the link on your phone and choose **Add to Home Screen**.
+
+## Quick start (on your own computer)
 
 Requirements: **Node.js 20+** and **PostgreSQL 14+**.
 

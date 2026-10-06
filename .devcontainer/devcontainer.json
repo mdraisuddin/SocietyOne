@@ -1,0 +1,15 @@
+{
+  "name": "SocietyOne",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/SocietyOne",
+  "forwardPorts": [4000],
+  "portsAttributes": {
+    "4000": { "label": "SocietyOne", "onAutoForward": "openBrowser" }
+  },
+  "postCreateCommand": "npm install && npm run db:reset",
+  "postAttachCommand": "npm run build && npm start",
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] }
+  }
+}

@@ -1,0 +1,28 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:22
+    command: sleep infinity
+    volumes:
+      - ..:/workspaces/SocietyOne:cached
+    environment:
+      DATABASE_URL: postgres://societyone:societyone@db:5432/societyone_dev
+      TEST_DATABASE_URL: postgres://societyone:societyone@db:5432/societyone_test
+      E2E_DATABASE_URL: postgres://societyone:societyone@db:5432/societyone_e2e
+      DEMO_MODE: "true"
+      PORT: "4000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: societyone
+      POSTGRES_PASSWORD: societyone
+      POSTGRES_DB: societyone_dev
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
